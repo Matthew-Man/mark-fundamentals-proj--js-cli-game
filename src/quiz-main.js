@@ -18,11 +18,26 @@ function printIntroduction() {
 };
 
 
+function createCategories() {
+    return {
+        "CONTINENT": ["EUROPE", "ASIA", "AFRICA", "NORTH AMERICA", "SOUTH AMERICA", "ANTARTICA", "OCEANIA"],
+        "COLOUR": ["RED", "BLUE", "GREEN", "PINK", "PURPLE"],
+        "SPORT": ["TENNIS", "BASKETBALL", "FOOTBALL", "VOLLEYBALL", "HOCKEY"],
+        "UK CITY": ["LONDON", "BIRMINGHAM", "MANCHESTER", "LIVERPOOL", "YORK"],
+        "CODING LANGUAGE": ["PYTHON", "JAVASCRIPT", "JAVA", "TYPESCRIPT", "RUBY", "C"]
+    };
+};
+
+
 // Main quiz game --------------------------
 
 
 function playQuiz() {
+    let lives = 3;
+    let score = 0;
+    let categories = createCategories();
 
+    console.log(lives, score, categories)
 };
 
 
@@ -30,4 +45,5 @@ function playQuiz() {
 
 module.exports = {
     playQuiz,
+    createCategories,
 };
