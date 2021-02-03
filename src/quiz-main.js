@@ -29,6 +29,23 @@ function createCategories() {
 };
 
 
+function displayQuestion(categoryName, jumble) {
+    console.log(seperator);
+    console.log(`What ${categoryName.toLowerCase()} is this?`);
+    console.log(jumble);
+};
+
+
+function sayWrong(isClueUsed, lives) {
+    if (isClueUsed) {
+        console.log("Wrong! Even with a clue, LOL...")
+    } else {
+        console.log("Wrong!");
+    console.log(`Number of lives remaining: ${lives}`);
+    }
+}
+
+
 // Ask player to select a category. Returns a tuple: chosen category name, its list of questions
 
 function getCategoryChoice(categories) {
@@ -62,7 +79,15 @@ function isCategoryValid(category, keys) {
 
 function play_category(category, categoryName, lives, score) {
     while (Object.keys(category).length > 0 && lives > 0) {
-        console.log("It works")
+        const [answer, jumble] = pickRandomQuestion(category);
+        displayQuestion(categoryName, jumble);
+        lives = handleGuesses(answer, lives);
+
+        if (lives > 0) {
+            score += 1;
+            // dispalyUpdate(score, lives, category, categoryName);
+        }
+    return [lives, score];
     };
 };
 
@@ -97,7 +122,29 @@ function shuffleArray(array, category) {
     };
 };
 
-pickRandomQuestion(["RED", "BLUE", "GREEN", "PINK", "PURPLE"]);
+
+
+// Handle user guessing (and clue-giving) for the given question
+
+function handleGuesses(answer, lives) {
+    let isCorrectlyGuessed = false;
+    let isClueUsed = false;
+
+    while (isCorrectlyGuessed !== true && lives > 0) {
+        let guess = prompt("Guess: ").toUpperCase();
+        if (guess == answer) {
+            isCorrectlyGuessed = true;
+            console.log("Right!");
+        } else {
+            lives -= 1;
+            sayWrong(isClueUsed, lives)
+            if (lives > 0 && isClueUsed !== true) {
+                continue;
+            };
+        };
+    };
+    return lives;
+};
 
 // Main quiz game --------------------------
 
