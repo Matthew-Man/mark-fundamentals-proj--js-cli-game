@@ -29,6 +29,8 @@ function createCategories() {
 };
 
 
+// Ask player to select a category. Returns a tuple: chosen category name, its list of questions
+
 function getCategoryChoice(categories) {
     const arrayOfCategoryKeys = Object.keys(categories)
     console.log("\nSelect a category out of:")
@@ -46,16 +48,56 @@ function getCategoryChoice(categories) {
     const category = categories[categoryName];
     delete categories[categoryName];
 
-    return category, categoryName    
+    return [category, categoryName]    
 };
-
-getCategoryChoice(createCategories());
 
 
 function isCategoryValid(category, keys) {
     return keys.includes(category);
 };
 
+
+// Play one given category, asking questions from it until completed or no lives left
+// Returns a tuple of the updated counts of score and lives
+
+function play_category(category, categoryName, lives, score) {
+    while (Object.keys(category).length > 0 && lives > 0) {
+        console.log("It works")
+    };
+};
+
+
+// Randomly selects a word from the chosen category and jumbles its letters.
+
+function pickRandomQuestion(category) {
+    const answer = category[Math.floor(Math.random() * category.length)];
+    //removeAnswerFromCat(answer, category);
+
+    let jumbledLetters = answer.split("");
+    jumbledLetters = shuffleArray(jumbledLetters, category);
+    const jumble = jumbledLetters.join("");
+    return [answer, jumble]
+};
+
+
+// Durstenfeld shuffle algorithm 
+// Loop added to ensure that the word is jumbled
+
+function shuffleArray(array, category) {
+    while (true) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        };
+        if (category.includes(array.join(""))) {
+            continue;
+        } else {
+            return array;
+        };
+    };
+};
+
+pickRandomQuestion(["RED", "BLUE", "GREEN", "PINK", "PURPLE"]);
 
 // Main quiz game --------------------------
 
@@ -67,7 +109,10 @@ function playQuiz() {
 
     printIntroduction();
 
-    getCategoryChoice(categories);
+    while (Object.keys(categories).length > 0 && lives > 0) {
+        const [category, categoryName] = getCategoryChoice(categories);
+        [lives, score] = play_category(category, categoryName, lives, score);
+    };
 };
 
 
