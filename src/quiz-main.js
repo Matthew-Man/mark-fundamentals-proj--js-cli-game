@@ -29,6 +29,34 @@ function createCategories() {
 };
 
 
+function getCategoryChoice(categories) {
+    const arrayOfCategoryKeys = Object.keys(categories)
+    console.log("\nSelect a category out of:")
+    for (let key of arrayOfCategoryKeys) {
+        console.log(key);
+    };
+    console.log(seperator);
+    let categoryName = prompt("Category choice: ").toUpperCase();
+    while (isCategoryValid(categoryName, arrayOfCategoryKeys) !== true) {
+        categoryName = prompt("Please select from the list above: ").toUpperCase();
+        if (isCategoryValid(categoryName, arrayOfCategoryKeys)) {
+            break;
+        };
+    }
+    const category = categories[categoryName];
+    delete categories[categoryName];
+
+    return category, categoryName    
+};
+
+getCategoryChoice(createCategories());
+
+
+function isCategoryValid(category, keys) {
+    return keys.includes(category);
+};
+
+
 // Main quiz game --------------------------
 
 
@@ -37,7 +65,9 @@ function playQuiz() {
     let score = 0;
     let categories = createCategories();
 
-    console.log(lives, score, categories)
+    printIntroduction();
+
+    getCategoryChoice(categories);
 };
 
 
