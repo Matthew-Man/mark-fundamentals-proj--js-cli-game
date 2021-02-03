@@ -78,7 +78,7 @@ function isCategoryValid(category, keys) {
 // Returns a tuple of the updated counts of score and lives
 
 function play_category(category, categoryName, lives, score) {
-    while (Object.keys(category).length > 0 && lives > 0) {
+    while (Object.values(category).length > 0 && lives > 0) {
         const [answer, jumble] = pickRandomQuestion(category);
         displayQuestion(categoryName, jumble);
         lives = handleGuesses(answer, lives);
@@ -86,9 +86,9 @@ function play_category(category, categoryName, lives, score) {
         if (lives > 0) {
             score += 1;
             // dispalyUpdate(score, lives, category, categoryName);
-        }
-    return [lives, score];
+        };
     };
+    return [lives, score];
 };
 
 
@@ -139,12 +139,24 @@ function handleGuesses(answer, lives) {
             lives -= 1;
             sayWrong(isClueUsed, lives)
             if (lives > 0 && isClueUsed !== true) {
-                continue;
+                isClueUsed = offerClue(answer);
             };
         };
     };
     return lives;
 };
+
+
+function offerClue(answer) {
+    const clueChoice = prompt("Would you like a clue, yes/no: ").toLowerCase();
+    if (clueChoice == "yes" || clueChoice == "y") {
+        console.log(`The first letter of the word is ${answer[0]}`);
+        return true;
+    } else {
+        return false;
+    };
+};
+
 
 // Main quiz game --------------------------
 
