@@ -77,7 +77,7 @@ function isCategoryValid(category, keys) {
 // Play one given category, asking questions from it until completed or no lives left
 // Returns a tuple of the updated counts of score and lives
 
-function play_category(category, categoryName, lives, score) {
+function playCategory(category, categoryName, lives, score) {
     while (Object.values(category).length > 0 && lives > 0) {
         const [answer, jumble] = pickRandomQuestion(category);
         displayQuestion(categoryName, jumble);
@@ -170,7 +170,7 @@ function playQuiz() {
 
     while (Object.keys(categories).length > 0 && lives > 0) {
         const [category, categoryName] = getCategoryChoice(categories);
-        [lives, score] = play_category(category, categoryName, lives, score);
+        [lives, score] = playCategory(category, categoryName, lives, score);
     };
 };
 
