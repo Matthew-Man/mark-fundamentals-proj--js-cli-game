@@ -1,4 +1,3 @@
-// Importing 'prompt' for user input (but comment out if you don't need it)
-const prompt = require("readline-sync").question;
+const { playQuiz } = require("./quiz-main");
 
-// Add your code below!
+playQuiz();
