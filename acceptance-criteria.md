@@ -39,7 +39,7 @@ Criteria 7:
 - When the user has zero lives
 - Then tell the user the game is over, tell them what score they got, and end the program
 
-Criteria 8:
+Criteria 8 (UPDATE - INCORRECT ASSUMPTION IGNORE):
 - Given the user has gotten an answer incorrect and has been given a clue
 - When the user inputs an incorrect answer (again)
 - Then inform the user it is incorrect and move onto the next question
