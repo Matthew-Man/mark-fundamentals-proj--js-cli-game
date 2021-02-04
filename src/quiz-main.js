@@ -41,9 +41,16 @@ function sayWrong(isClueUsed, lives) {
         console.log("Wrong! Even with a clue, LOL...")
     } else {
         console.log("Wrong!");
+    };
     console.log(`Number of lives remaining: ${lives}`);
+};
+
+
+function removeAnswerFromCat(answer, category) {
+    if (category.includes(answer)) {
+        category.splice(category.indexOf(answer), 1);
     }
-}
+};
 
 
 // Ask player to select a category. Returns a tuple: chosen category name, its list of questions
@@ -74,6 +81,17 @@ function isCategoryValid(category, keys) {
 };
 
 
+function dispalyUpdate(score, lives, category, categoryName) {
+    console.log(`Your score is: ${score} and you have ${lives} lives remaining.`);
+    const roundsRemaining = category.length;
+    if (roundsRemaining > 0) {
+        console.log(`${category.length} rounds remain in the category ${categoryName}`);
+    } else {
+        console.log(`That's the end of category ${categoryName}`);
+    };
+};
+
+
 // Play one given category, asking questions from it until completed or no lives left
 // Returns a tuple of the updated counts of score and lives
 
@@ -85,7 +103,7 @@ function playCategory(category, categoryName, lives, score) {
 
         if (lives > 0) {
             score += 1;
-            // dispalyUpdate(score, lives, category, categoryName);
+            dispalyUpdate(score, lives, category, categoryName);
         };
     };
     return [lives, score];
@@ -96,7 +114,7 @@ function playCategory(category, categoryName, lives, score) {
 
 function pickRandomQuestion(category) {
     const answer = category[Math.floor(Math.random() * category.length)];
-    //removeAnswerFromCat(answer, category);
+    removeAnswerFromCat(answer, category);
 
     let jumbledLetters = answer.split("");
     jumbledLetters = shuffleArray(jumbledLetters, category);
@@ -137,8 +155,8 @@ function handleGuesses(answer, lives) {
             console.log("Right!");
         } else {
             lives -= 1;
-            sayWrong(isClueUsed, lives)
-            if (lives > 0 && isClueUsed !== true) {
+            sayWrong(isClueUsed, lives);
+            if (lives > 0 && isClueUsed === false) {
                 isClueUsed = offerClue(answer);
             };
         };
@@ -172,6 +190,13 @@ function playQuiz() {
         const [category, categoryName] = getCategoryChoice(categories);
         [lives, score] = playCategory(category, categoryName, lives, score);
     };
+
+    if (lives > 0) {
+        console.log("\nCONGRATULATIONS, you've reached the end of the game!");
+    } else {
+        console.log("\nNo juice left in the tank\n\n!!!!!GAME OVER!!!!!");
+    };
+    console.log(`Your final score is ${score} and you had ${lives} lives remaining.\n\n`)
 };
 
 
